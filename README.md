@@ -117,7 +117,6 @@ Settings live in `~/.config/claude-notify.conf` (sourced as bash `key=value`). A
 | `icon`            | _(empty)_                   | Path to a notification icon; empty uses alerter's default.                                                  |
 | `action_app`      | _(empty)_                   | App opened when you click the notification, e.g. `"Visual Studio Code"`. Empty = no click action.           |
 | `alerter_timeout` | _(empty)_                   | Seconds before auto-dismiss. Empty = the notification waits until you click/dismiss it.                     |
-| `debug`           | `false`                     | Append diagnostics to `~/notification.log`.                                                                 |
 
 You can also point at a different config file with the `CLAUDE_NOTIFY_CONFIG` environment variable.
 
