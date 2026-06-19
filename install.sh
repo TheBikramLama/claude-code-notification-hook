@@ -84,14 +84,24 @@ echo "Linked: $config -> $repo_config"
 # only if one isn't already present.
 settings_file="$HOME/.claude/settings.json"
 
+# Verify hooks.json exists
+hooks_file="$repo_dir/hooks.json"
+if [ ! -f "$hooks_file" ]; then
+  echo "Hooks config not found: $hooks_file" >&2
+  echo "Make sure the repo is complete and re-run ./install.sh." >&2
+  exit 1
+fi
+
 echo ""
 echo "Updating $settings_file ..."
 
-python3 - "$settings_file" <<'PYEOF'
+export HOOKS_FILE="$hooks_file"
+python3 - "$settings_file" "$hooks_file" <<'PYEOF'
 import json, sys, os, shutil
 from datetime import datetime
 
 settings_path = sys.argv[1]
+hooks_path   = sys.argv[2]
 
 # Read existing settings or start fresh
 if os.path.isfile(settings_path):
@@ -108,21 +118,9 @@ else:
 
 hooks = settings.setdefault("hooks", {})
 
-# Hook entries to install
-entries = {
-    "PermissionRequest": {
-        "hooks": [{"type": "command", "command": "~/.claude/hooks/notify.sh --title 'Claude needs permission' --message 'Requesting tool access' --sound 'Funk' --context_aware false"}]
-    },
-    "Stop": {
-        "hooks": [{"type": "command", "timeout": 25, "command": "~/.claude/hooks/notify.sh 'Claude finished' 'Response ready' 'Glass'"}]
-    },
-    "StopFailure": {
-        "hooks": [{"type": "command", "timeout": 25, "command": "~/.claude/hooks/notify.sh 'Claude error' 'Turn ended with API error' 'Basso'"}]
-    },
-    "Notification": {
-        "hooks": [{"type": "command", "command": "~/.claude/hooks/notify.sh 'Claude' 'Notification' 'Pop'"}]
-    },
-}
+# Read hooks from hooks.json
+with open(hooks_path, "r") as f:
+    entries = json.load(f)
 
 for event, entry in entries.items():
     existing = hooks.get(event, [])

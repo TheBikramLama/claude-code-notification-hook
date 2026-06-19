@@ -1,0 +1,37 @@
+{
+  "PermissionRequest": {
+    "hooks": [
+      {
+        "type": "command",
+        "command": "~/.claude/hooks/notify.sh --title 'Claude needs permission' --message 'Requesting tool access' --sound 'Funk' --context_aware false"
+      }
+    ]
+  },
+  "Stop": {
+    "hooks": [
+      {
+        "type": "command",
+        "timeout": 25,
+        "command": "~/.claude/hooks/notify.sh 'Claude finished' 'Response ready' 'Glass'"
+      }
+    ]
+  },
+  "StopFailure": {
+    "hooks": [
+      {
+        "type": "command",
+        "timeout": 25,
+        "command": "~/.claude/hooks/notify.sh 'Claude error' 'Turn ended with API error' 'Basso' --context_aware false"
+      }
+    ]
+  },
+  "PostCompact": {
+    "hooks": [
+      {
+        "type": "command",
+        "timeout": 25,
+        "command": "~/.claude/hooks/notify.sh 'Claude compact' 'Context trimmed' 'Glass' --context_aware false"
+      }
+    ]
+  }
+}
