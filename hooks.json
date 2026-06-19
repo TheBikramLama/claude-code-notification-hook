@@ -12,7 +12,7 @@
       {
         "type": "command",
         "timeout": 25,
-        "command": "~/.claude/hooks/notify.sh 'Claude finished' 'Response ready' 'Glass'"
+        "command": "~/.claude/hooks/notify.sh --title 'Claude finished' --message 'Response ready' --sounde 'Glass'"
       }
     ]
   },
@@ -21,7 +21,7 @@
       {
         "type": "command",
         "timeout": 25,
-        "command": "~/.claude/hooks/notify.sh 'Claude error' 'Turn ended with API error' 'Basso' --context_aware false"
+        "command": "~/.claude/hooks/notify.sh --title 'Claude error' --message 'Turn ended with API error' --sound 'Basso' --context_aware false"
       }
     ]
   },
@@ -30,7 +30,7 @@
       {
         "type": "command",
         "timeout": 25,
-        "command": "~/.claude/hooks/notify.sh 'Claude compact' 'Context trimmed' 'Glass' --context_aware false"
+        "command": "~/.claude/hooks/notify.sh --title 'Claude compact' --message 'Context trimmed' --sound 'Glass' --context_aware false"
       }
     ]
   }
